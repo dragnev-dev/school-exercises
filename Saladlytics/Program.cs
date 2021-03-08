@@ -98,12 +98,10 @@ namespace Saladlytics
                 }
 
                 // not taking into account work days and work hours
-                // ordered by type
-                var todaysOrders = Orders.Where(o => o.DatePlaced.Date == DateTime.Now.Date).OrderBy(o => o.GetType());
+                var ordersToday = Orders.Where(o => o.DatePlaced.Date == DateTime.Now.Date);
 
                 var tablesTakenToday = new List<int>();
                 
-                // общ брой продажби
                 int salesCount = 0;
                 decimal billedTotal = 0;
                 var salads = new List<Product>();
@@ -112,7 +110,7 @@ namespace Saladlytics
                 var desserts = new List<Product>();
                 var drinks = new List<Product>();
                 
-                foreach (var order in todaysOrders)
+                foreach (var order in ordersToday)
                 {
                     tablesTakenToday.Add(order.Table);
                     salesCount += order.NumeberOfSales;
