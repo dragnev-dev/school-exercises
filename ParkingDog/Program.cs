@@ -10,7 +10,7 @@ namespace ParkingDog
     {
         static void Main()
         {
-            Parkings = new List<Parking>();
+            ParkingLots = new List<Parking>();
             while (true)
             {
                 var input = ReadInputString();
@@ -18,7 +18,7 @@ namespace ParkingDog
             }
         }
 
-        private static List<Parking> Parkings { get; set; }
+        private static List<Parking> ParkingLots { get; set; }
 
         private static string ReadInputString()
         {
@@ -41,7 +41,7 @@ namespace ParkingDog
                         "кола" => new LightCar(),
                         "бус" => new MediumCar(),
                         "камион" => new HeavyCar(),
-                        _ => throw new ApplicationException()
+                        _ => throw new AggregateException()
                     };
                     car.SetMakeModel(input[1], input[2]);
 
@@ -54,7 +54,7 @@ namespace ParkingDog
 
                     break;
                 case "печат":
-                    var printParking = Parkings.FirstOrDefault(p => p.Name == input[1]);
+                    var printParking = ParkingLots.FirstOrDefault(p => p.Name == input[1]);
 
                     InformTheUser(printParking != null
                         ? printParking.ToString()
@@ -63,16 +63,16 @@ namespace ParkingDog
                     break;
                 case "паркинг":
                     var name = input[1];
-                    var lightCars = ParseNumericInput(input[2]);
-                    var mediumCars = ParseNumericInput(input[3]);
-                    var heavyCars = ParseNumericInput(input[4]);
+                    var lightCars = ParseUserEnteredNumbers(input[2], typeof(int));
+                    var mediumCars = ParseUserEnteredNumbers(input[3], typeof(int));
+                    var heavyCars = ParseUserEnteredNumbers(input[4], typeof(int));
 
                     var parking = new Parking(name, lightCars, mediumCars, heavyCars);
 
-                    Parkings.Add(parking);
+                    ParkingLots.Add(parking);
                     break;
                 case "край":
-                    foreach (var item in Parkings)
+                    foreach (var item in ParkingLots)
                     {
                         InformTheUser(item.CurrentLoadInformation());
                     }
@@ -87,7 +87,7 @@ namespace ParkingDog
 
         private static Parking GetParkingSpot(Car car)
         {
-            foreach (var parking in Parkings)
+            foreach (var parking in ParkingLots)
             {
                 if (parking.HasEmptySpot(car))
                 {
@@ -98,10 +98,18 @@ namespace ParkingDog
             return null;
         }
 
-        private static int ParseNumericInput(string input)
+        private static int ParseUserEnteredNumbers(string input, Type type)
         {
-            // try.parse
-            return int.Parse(input);
+            try
+            {
+                if (type == typeof(int))
+                    return int.Parse(input);
+                throw new AggregateException();
+            }
+            catch
+            {
+                throw new ApplicationException($"Невалидна стойност: {input}");
+            }
         }
 
         private static void TerminateApplication()

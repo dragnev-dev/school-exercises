@@ -28,14 +28,14 @@ namespace ParkingDog.Models
                 LightCar _ => LightCars.Count < LightCars.Capacity,
                 MediumCar _ => MediumCars.Count < MediumCars.Capacity,
                 HeavyCar _ => HeavyCars.Count < HeavyCars.Capacity,
-                _ => throw new ApplicationException()
+                _ => throw new AggregateException()
             };
         }
         
         public Car AddCar(Car car)
         {
             if (!HasEmptySpot(car))
-                throw new ApplicationException();
+                throw new AggregateException();
             
             switch (car)
             {
@@ -87,9 +87,9 @@ namespace ParkingDog.Models
 
             sb.AppendLine($"Леки автомобили {LightCars.Capacity}, заети {LightCars.Count}");
             sb.AppendLine($"Лекотоварни автомобили {MediumCars.Capacity}, заети {MediumCars.Count}");
-            sb.AppendLine($"Тежкотоварни автомобили {HeavyCars.Capacity}, заети {HeavyCars.Count}");
+            // TODO: Use AppendLine and then remove the last \n
+            sb.Append($"Тежкотоварни автомобили {HeavyCars.Capacity}, заети {HeavyCars.Count}");
             
-            // TODO: Remove the last newline
             
             return sb.ToString();
         }
