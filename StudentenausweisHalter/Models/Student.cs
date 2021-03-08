@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,9 @@ namespace StudentenausweisHalter.Models
     {
         public Student(string name)
         {
+            if (name.Length < 2 || name.Length > 50)
+                throw new ApplicationException("Грешка при създаване на дисциплина:\n" +
+                                           "Допустимата дължина за имена е между 2 и 50 символа.");
             Name = name;
             Semesters = new List<Semester>();
         }
@@ -30,11 +34,6 @@ namespace StudentenausweisHalter.Models
 
         public override string ToString()
         {
-            /*1, ОП, 25, 30, проф. И.Иванов, 6;
-             1, ЛААГ, 25, 30, проф. Г.Панайотова, 4;
-             1, ДМ, 25, 30, проф. Р.Павлов, 3;
-             2, ООП, 25, 30, проф. И.Иванов, 4;
-             3, КМК, 25, 30, В.Иванов, 5*/
             var sb = new StringBuilder();
             sb.AppendLine($"Студент: {Name}");
             sb.AppendLine($"Общо изучавани дисциплини: {TotalSubjectCount}");

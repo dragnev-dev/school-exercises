@@ -10,7 +10,7 @@ namespace Saladlytics.Models.Abstract
             if (price < 0 || price > 100)
                 throw new ApplicationException(
                     $"Грешка при създаване на продукт:\n" +
-                    $"Цената трябва да бъде между {0} и {100}");
+                    $"Цената трябва да бъде между {0:N2} и {100:N2}");
 
             if (name.Any(char.IsDigit))
             {

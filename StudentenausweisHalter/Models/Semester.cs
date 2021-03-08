@@ -7,6 +7,10 @@ namespace StudentenausweisHalter.Models
     {
         public Semester(int semesterNumber)
         {
+            if (semesterNumber < 1 || semesterNumber > 12)
+                throw new ApplicationException("Грешка при създаване на семестър:\n" +
+                                               "Стойността за номер може да бъде между 1 и 12.");
+                
             Number = semesterNumber;
             Subjects = new List<Subject>();
         }

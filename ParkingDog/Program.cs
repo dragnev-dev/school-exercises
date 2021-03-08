@@ -14,7 +14,14 @@ namespace ParkingDog
             while (true)
             {
                 var input = ReadInputString();
-                ProcessCommand(input);
+                try
+                {
+                    ProcessCommand(input);
+                }
+                catch (ApplicationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -59,7 +66,7 @@ namespace ParkingDog
                     InformTheUser(printParking != null
                         ? printParking.ToString()
                         : $"Паркинг с име {input[1]} не е намерен.");
-                    
+
                     break;
                 case "паркинг":
                     var name = input[1];

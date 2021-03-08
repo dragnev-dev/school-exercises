@@ -12,7 +12,7 @@ namespace Saladlytics.Models
             if (tableNumber < 1 || tableNumber > 30)
                 throw new ApplicationException(
                     $"Грешка при създаване на поръчка:\n" +
-                    $"Номерът на масата трябва да бъде между {0} и {100}");
+                    $"Номерът на масата трябва да бъде между {0} и {30}");
             
             DatePlaced = DateTime.Now;
             Table = tableNumber;
