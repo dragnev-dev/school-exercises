@@ -32,7 +32,7 @@ namespace StudentenausweisHalter
                         var semester = student.GetSemesterIfExistent(semesterNumber) ?? 
                                        student.AddNewSemester(semesterNumber);
 
-                        if (semester.Subjects.Any(s => s.Name == subjectName))
+                        if (semester.GetSubjectIfExistent(subjectName) != null)
                             throw new ApplicationException("Грешка при добавянето на дисциплина:\n" +
                                                            "Дисциплина с такова име вече съществува.");
 

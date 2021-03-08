@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,5 +26,8 @@ namespace StudentenausweisHalter.Models
         }
 
         public int TotalStudyHours => Subjects.Sum(s => s.TotalStudyHours);
+
+        public Subject GetSubjectIfExistent(string subjectName) => 
+            Subjects.FirstOrDefault(s => s.Name == subjectName);
     }
 }
