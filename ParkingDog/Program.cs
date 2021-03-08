@@ -45,7 +45,7 @@ namespace ParkingDog
                     };
                     car.SetMakeModel(input[1], input[2]);
 
-                    var parkingCandidate = GetParkingSpot(car);
+                    var parkingCandidate = GetAvailableParkingSpot(car);
                     if (parkingCandidate != null)
                         car.Park(parkingCandidate);
 
@@ -85,17 +85,9 @@ namespace ParkingDog
             }
         }
 
-        private static Parking GetParkingSpot(Car car)
+        private static Parking GetAvailableParkingSpot(Car car)
         {
-            foreach (var parking in ParkingLots)
-            {
-                if (parking.HasEmptySpot(car))
-                {
-                    return parking;
-                }
-            }
-
-            return null;
+            return ParkingLots.FirstOrDefault(parking => parking.HasEmptySpot(car));
         }
 
         private static int ParseUserEnteredNumbers(string input, Type type)
