@@ -114,7 +114,7 @@ namespace Saladlytics
                 {
                     tablesTakenToday.Add(order.Table);
                     salesCount += order.NumeberOfSales;
-                    billedTotal += order.TotalBill;
+                    billedTotal += order.GetTotalBill();
                     foreach (var product in order.Products)
                     {
                         switch (product)

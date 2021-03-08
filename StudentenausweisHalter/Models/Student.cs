@@ -27,28 +27,26 @@ namespace StudentenausweisHalter.Models
             return semester;
         }
 
-        public Semester GetSemesterIfExistent(int semesterNumber)
-        {
-            return Semesters.FirstOrDefault(s => s.Number == semesterNumber);
-        }
+        public Semester GetSemesterIfExistent(int semesterNumber) =>
+            Semesters.FirstOrDefault(s => s.Number == semesterNumber);
 
         public override string ToString()
         {
             var sb = new StringBuilder();
             sb.AppendLine($"Студент: {Name}");
-            sb.AppendLine($"Общо изучавани дисциплини: {TotalSubjectCount}");
+            sb.AppendLine($"Общо изучавани дисциплини: {GetTotalSubjectCount()}");
             sb.AppendLine("Среден успех по семестри и общ хорариум:");
             for (var i = 0; i < Semesters.Count; i++)
             {
                 // TODO: are the subjects enumerated twice here?
-                sb.AppendLine($"  {i+1}. Семестър {Semesters[i].Number}, {Semesters[i].TotalStudyHours}: {Semesters[i].Subjects.Select(s => s.Grade).Average():N2}");
+                sb.AppendLine($"  {i+1}. Семестър {Semesters[i].Number}, {Semesters[i].TotalStudyHours()}: {Semesters[i].Subjects.Select(s => s.Grade).Average():N2}");
             }
-            sb.AppendLine($"Общ среден успех: {GradePointAverage:N2}");
+            sb.AppendLine($"Общ среден успех: {GetGradePointAverage():N2}");
             // TODO remove the last \n here 
             return sb.ToString();
         }
 
-        private int TotalSubjectCount => Semesters.SelectMany(s => s.Subjects).Count();
-        private double GradePointAverage => Semesters.SelectMany(s => s.Subjects.Select(su => su.Grade)).Average();
+        private int GetTotalSubjectCount() => Semesters.SelectMany(s => s.Subjects).Count();
+        private double GetGradePointAverage() => Semesters.SelectMany(s => s.Subjects.Select(su => su.Grade)).Average();
     }
 }

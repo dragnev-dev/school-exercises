@@ -22,7 +22,7 @@ namespace Saladlytics.Models
         public int Table { get; set; }
         public List<Product> Products { get; set; }
         public int NumeberOfSales => Products.Count;
-        public decimal TotalBill => Products.Sum(p => p.Price);
+        public decimal GetTotalBill() => Products.Sum(p => p.Price);
 
         public List<Type> GetProductTypes()
         {
